@@ -1,8 +1,8 @@
- name ="dev"
+ name ="storageaccountdev2025"
 
  account_replication_type ="GRS"
  location = "Eastus2"
- resource_group_name = "RG"
+ resource_group_name = "RG-DEV"
  account_tier ="Standard"
 
- storage_container_name ="testingblob"
+ storage_container_name ="devblob"
