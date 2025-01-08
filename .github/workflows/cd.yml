@@ -1,6 +1,9 @@
 ---
 name: deploy storage account
-on: [pull_request]
+on: 
+    push:
+        branches:
+            - dev
 
 permissions:
     id-token: write
@@ -37,6 +40,6 @@ jobs:
               working-directory: ./app
 
             - name: terraform deploy
-              run: terraform plan --auto-approve --var-file="./tfvars/dev.tfvars"
+              run: terraform apply --auto-approve --var-file="./tfvars/dev.tfvars"
               working-directory: ./app
                 
