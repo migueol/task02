@@ -1,0 +1,45 @@
+---
+name: deploy storage account
+on: 
+    push:
+        branches:
+            - stage
+
+permissions:
+    id-token: write
+    contents: read
+    repository-projects: write
+    issues: write
+    actions: read
+
+jobs:
+    ci:
+        runs-on: ubuntu-latest
+        environment: qa
+        steps: 
+            - name: checkout
+              uses: actions/checkout@v3
+
+            - name: login to azure
+              uses: azure/login@v2
+              with:
+                client-id: ${{ vars.AZURE_CLIENT_ID }}
+                tenant-id: ${{ vars.AZURE_TENANT_ID }}
+                subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+            - name: install terraform 
+              uses: hashicorp/setup-terraform@v3
+              with:
+                    terraform_version: "1.5.2"
+            - name: terraform init
+              run: terraform init
+              working-directory: ./app
+
+            - name: terraform plan
+              run: terraform plan --var-file="./tfvars/qa.tfvars"
+              working-directory: ./app
+
+            - name: terraform deploy
+              run: terraform apply --auto-approve --var-file="./tfvars/qa.tfvars"
+              working-directory: ./app
+                
