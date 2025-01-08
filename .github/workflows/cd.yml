@@ -10,7 +10,7 @@ jobs:
     ci:
         runs-on: ubuntu-latest
         environment: dev
-        steps:
+        steps: 
             - name: checkout
               uses: actions/checkout@v3
 
@@ -28,6 +28,6 @@ jobs:
             - name: terraform init
               run: terraform init
             - name: terraform plan
-              run: terraform plan
+              run: terraform plan --var-file="./tfvars/dev.tfvars"
               working-directory: ./app
                 
