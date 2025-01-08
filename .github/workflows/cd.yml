@@ -30,6 +30,8 @@ jobs:
                     terraform_version: "1.5.2"
             - name: terraform init
               run: terraform init
+              working-directory: ./app
+              
             - name: terraform plan
               run: terraform plan --var-file="./tfvars/dev.tfvars"
               working-directory: ./app
